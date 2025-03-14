@@ -1,50 +1,96 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.*" %>
+
 <html>
 <head>
-<title>Les tableaux</title>
+    <title>Les tableaux</title>
 </head>
-<body bgcolor=white>
-<h1>Exercices sur les tableaux</h1>
-<form action="#" method="post">
-    <p>Saisir au minimu 3 chiffres à la suite, exemple : 6 78 15 <input type="text" id="inputValeur" name="chaine">
-    <p><input type="submit" value="Afficher">
-</form>
-<%-- Récupération des valeurs --%>
+<body bgcolor="white">
+    <h1>Exercices sur les tableaux</h1>
+
+    <form action="#" method="post">
+        <p>Saisir au minimum 3 chiffres à la suite (exemple : 6 78 15) :
+        <input type="text" name="chaine"></p>
+        <p><input type="submit" value="Afficher"></p>
+    </form>
+
+    <%-- Récupération de la saisie utilisateur --%>
     <% String chaine = request.getParameter("chaine"); %>
-    
-    <% if (chaine != null) { %>
 
-    <%-- Division de la chaîne de chiffres séparés par des espaces --%>
-    <% String[] tableauDeChiffres = chaine.split("\\s+"); %>
-    <p>La tableau contient <%= tableauDeChiffres.length %> valeurs</br>
-    Chiffre 1 : <%= Integer.parseInt(tableauDeChiffres[0]) %></br>
-    Chiffre 2 : <%= Integer.parseInt(tableauDeChiffres[1]) %></br>
-    Chiffre 3 : <%= Integer.parseInt(tableauDeChiffres[2]) %></p>
-    
-<h2>Exercice 1 : La carré de la première valeur</h2>
-<p>Ecrire un programme afin d'afficher le carré de la première valeur</p>
+    <% if (chaine != null && !chaine.trim().isEmpty()) { 
+        String[] tableauDeChiffres = chaine.trim().split("\\s+");
+        int longueurTableau = tableauDeChiffres.length;
 
-<h2>Exercice 2 : La somme des 2 premières valeurs</h2>
-<p>Ecrire un programme afin d'afficher la somme des deux premières valeurs</p>
+        // Vérification qu'il y a au moins 3 nombres
+        if (longueurTableau >= 3) { 
+            int[] nombres = new int[longueurTableau];
+            for (int i = 0; i < longueurTableau; i++) {
+                nombres[i] = Integer.parseInt(tableauDeChiffres[i]);
+            }
+    %>
 
-<h2>Exercice 3 : La somme de toutes les valeurs</h2>
-<p>L'utilisateur peut à présent saisir autant de valeurs qu'il le souhaite dans champs de saisie.</br>
-Ecrire un programme afin de faire la somme de toutes les valeurs saisie par l'utilisateur</p>
+    <h2>Analyse des valeurs saisies</h2>
+    <p>Le tableau contient <%= longueurTableau %> valeurs.</p>
+    <ul>
+        <% for (int i = 0; i < longueurTableau; i++) { %>
+            <li>Valeur <%= (i + 1) %> : <%= nombres[i] %></li>
+        <% } %>
+    </ul>
 
-<h2>Exercice 4 : La valeur maximum</h2>
-<p>Ecrire un programme pour afficher la valeur maximale saisie par l'utilisateur</p>
+    <hr>
 
-<h2>Exercice 5 : La valeur minimale</h2>
-<p>Ecrire un programme pour afficher la valeur minimale saisie par l'utilisateur</p>
+    <h2>Exercice 1 : Carré de la première valeur</h2>
+    <p>Le carré de la première valeur (<%= nombres[0] %>) est : <%= nombres[0] * nombres[0] %></p>
 
-<h2>Exercice 6 : La valeur le plus proche de 0</h2>
-<p>Trouvez la valeur la plus proche de 0 (chiffres positifs ou négatifs)</p>
+    <h2>Exercice 2 : Somme des deux premières valeurs</h2>
+    <p>La somme de <%= nombres[0] %> et <%= nombres[1] %> est : <%= nombres[0] + nombres[1] %></p>
 
-<h2>Exercice 7 : La valeur le plus proche de 0 (2° version)</h2>
-<p>Trouvez la valeur la plus proche de 0 (chiffres positifs ou négatifs)</p>
-<p>En cas d'égalité entre un chiffre positif et négatif, affichez le chiffre positif</p>
+    <h2>Exercice 3 : Somme de toutes les valeurs</h2>
+    <% 
+        int sommeTotale = 0;
+        for (int num : nombres) { sommeTotale += num; }
+    %>
+    <p>La somme de toutes les valeurs est : <%= sommeTotale %></p>
 
-<% } %>
-<p><a href="index.html">Retour au sommaire</a></p>
+    <h2>Exercice 4 : Valeur maximale</h2>
+    <% int max = Arrays.stream(nombres).max().getAsInt(); %>
+    <p>La valeur maximale est : <%= max %></p>
+
+    <h2>Exercice 5 : Valeur minimale</h2>
+    <% int min = Arrays.stream(nombres).min().getAsInt(); %>
+    <p>La valeur minimale est : <%= min %></p>
+
+    <h2>Exercice 6 : Valeur la plus proche de 0</h2>
+    <% 
+        int procheZero = nombres[0];
+        for (int num : nombres) {
+            if (Math.abs(num) < Math.abs(procheZero)) {
+                procheZero = num;
+            }
+        }
+    %>
+    <p>La valeur la plus proche de 0 est : <%= procheZero %></p>
+
+    <h2>Exercice 7 : Valeur la plus proche de 0 (priorité au positif)</h2>
+    <% 
+        int procheZeroV2 = nombres[0];
+        for (int num : nombres) {
+            if (Math.abs(num) < Math.abs(procheZeroV2) || 
+                (Math.abs(num) == Math.abs(procheZeroV2) && num > procheZeroV2)) {
+                procheZeroV2 = num;
+            }
+        }
+    %>
+    <p>La valeur la plus proche de 0 (en priorisant le positif) est : <%= procheZeroV2 %></p>
+
+    <% } else { %>
+        <p style="color:red;">Veuillez entrer au moins 3 nombres séparés par des espaces.</p>
+    <% } %>
+
+    <% } %>
+
+    <hr>
+    <p><a href="index.html">Retour au sommaire</a></p>
+
 </body>
 </html>
