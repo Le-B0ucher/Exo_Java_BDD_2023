@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Les chaines</title>
+    <title>Les chaînes de caractères</title>
 </head>
 <body bgcolor="white">
     <h1>Exercices sur les chaînes de caractères</h1>
@@ -24,8 +24,8 @@
     <%-- Longueur de la chaîne --%>
     <p>La longueur de votre chaîne est de <%= chaine.length() %> caractères.</p>
 
-    <%-- Extraction du 3° caractère --%>
-    <p>Le 3° caractère de votre chaîne est : <%= chaine.charAt(2) %></p>
+    <%-- Extraction du 3e caractère --%>
+    <p>Le 3e caractère de votre chaîne est : <%= chaine.charAt(2) %></p>
 
     <%-- Obtention d'une sous-chaîne --%>
     <% String sousChaine = chaine.length() >= 6 ? chaine.substring(2, 6) : "Trop court"; %>
@@ -33,7 +33,7 @@
 
     <%-- Recherche de la lettre "e" --%>
     <% int positionE = chaine.indexOf('e'); %>
-    <p>Votre premier "e" est en position : <%= positionE %></p>
+    <p>Votre premier "e" est en position : <%= (positionE != -1 ? positionE + 1 : "Aucun 'e' trouvé") %></p>
 
     <hr>
 
@@ -96,3 +96,4 @@
 
 </body>
 </html>
+
