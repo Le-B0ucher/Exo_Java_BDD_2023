@@ -9,30 +9,38 @@
 
     <form method="post" action="taches.jsp">
         Tâche : <input type="text" name="tache" required />
+        Terminée ? <input type="checkbox" name="terminee" />
         <input type="submit" value="Ajouter" />
     </form>
 
     <%
-        // Récupérer ou créer la liste de tâches depuis la session
-        List<String> taches = (List<String>) session.getAttribute("taches");
+        // Récupération ou création de la liste de tâches (clé = nom, valeur = terminé ?)
+        Map<String, Boolean> taches = (Map<String, Boolean>) session.getAttribute("taches");
         if (taches == null) {
-            taches = new ArrayList<>();
+            taches = new LinkedHashMap<>();
             session.setAttribute("taches", taches);
         }
 
-        // Ajouter la tâche si envoyée
+        // Traitement du formulaire
         String nouvelleTache = request.getParameter("tache");
+        boolean estTerminee = request.getParameter("terminee") != null;
+
         if (nouvelleTache != null && !nouvelleTache.trim().isEmpty()) {
-            taches.add(nouvelleTache);
+            taches.put(nouvelleTache, estTerminee);
         }
     %>
 
     <h2>Liste des tâches</h2>
     <ul>
         <%
-            for (String t : taches) {
+            for (Map.Entry<String, Boolean> entry : taches.entrySet()) {
+                String titre = entry.getKey();
+                Boolean terminee = entry.getValue();
         %>
-            <li><%= t %></li>
+            <li>
+                <%= titre %> — 
+                <strong><%= terminee ? "✅ Terminée" : "❌ En cours" %></strong>
+            </li>
         <%
             }
         %>
