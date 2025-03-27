@@ -1,37 +1,41 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@ page import="java.util.*" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-<title>Taches</title>
+    <title>Gestionnaire de Tâches</title>
 </head>
-<body bgcolor=white>
-<h1>Saisir une tache</h1>
-<form action="#" method="post">
-    <label for="inputValeur">Saisir le nom d'une tache : </label>
-    <input type="text" id="inputValeur" name="valeur">
-    <input type="submit" value="Enregistrer">
-</form>
+<body>
+    <h2>Ajouter une tâche</h2>
 
-<%! 
-    class MyClass {
-        String nameTache;
+    <form method="post" action="taches.jsp">
+        Tâche : <input type="text" name="tache" required />
+        <input type="submit" value="Ajouter" />
+    </form>
 
-        public MyClass(String name) {
-            nameTache = name;
+    <%
+        // Récupérer ou créer la liste de tâches depuis la session
+        List<String> taches = (List<String>) session.getAttribute("taches");
+        if (taches == null) {
+            taches = new ArrayList<>();
+            session.setAttribute("taches", taches);
         }
-    }
-%>
 
-<%
-    String valeur = request.getParameter("valeur");
+        // Ajouter la tâche si envoyée
+        String nouvelleTache = request.getParameter("tache");
+        if (nouvelleTache != null && !nouvelleTache.trim().isEmpty()) {
+            taches.add(nouvelleTache);
+        }
+    %>
 
-    if (valeur != null && !valeur.isEmpty()) {
-        MyClass tache = new MyClass(valeur);
-%>
-        <p>Nom de la tâche : <%= tache.nameTache %></p>
-<%
-    }
-%>
-
+    <h2>Liste des tâches</h2>
+    <ul>
+        <%
+            for (String t : taches) {
+        %>
+            <li><%= t %></li>
+        <%
+            }
+        %>
+    </ul>
 </body>
 </html>
