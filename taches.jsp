@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestionnaire de Tâches</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
