@@ -1,67 +1,105 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== GLOBAL ===== */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #fff;
-    margin: 40px auto;
-    max-width: 800px;
-    color: #202124;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f6f7fb;
+    color: #2d2d2d;
+    padding: 40px;
+    max-width: 900px;
+    margin: auto;
 }
 
-h2 {
-    font-size: 1.8em;
-    color: #202124;
-}
-
-form {
+/* ===== TITRES ===== */
+h1, h2 {
+    color: #333;
     margin-bottom: 20px;
+}
+
+/* ===== FORMULAIRE ===== */
+form {
+    margin-bottom: 25px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 input[type="text"],
 input[type="date"] {
-    padding: 6px 10px;
-    font-size: 14px;
-    margin-right: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
+    margin-right: 10px;
+    width: calc(100% - 30px);
+    margin-bottom: 10px;
 }
 
-button, input[type="submit"] {
-    padding: 6px 12px;
+input[type="submit"],
+button {
+    padding: 10px 18px;
     font-size: 14px;
-    background-color: #1a73e8;
+    font-weight: bold;
+    background-color: #0073ea;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-button:hover, input[type="submit"]:hover {
-    background-color: #155ab6;
+input[type="submit"]:hover,
+button:hover {
+    background-color: #005dc1;
 }
 
+/* ===== TÂCHES ===== */
 .task {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    background-color: #f8f9fa;
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 15px;
 }
 
-.task-title {
-    font-weight: bold;
+.task .info {
+    flex-grow: 1;
+}
+
+.task .task-title {
     font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-.status {
+.task .status {
     font-size: 14px;
-    margin-top: 8px;
-    color: #333;
+    margin-top: 6px;
+    color: #555;
 }
 
-.actions {
+.task .actions {
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+/* ===== LIENS ET RETOURS ===== */
+a {
+    color: #0073ea;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
